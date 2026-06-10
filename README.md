@@ -1,340 +1,265 @@
-# 🔌 USB to TTL / RS485 / RS232 Converter
+# 🚀 SerialFusion
 
-> A compact multi-protocol USB communication tool based on CH340K, MAX232 & MAX485 for embedded development, industrial communication, debugging, and automation projects.
+![3D Render](/Image/SerialFusion.png)
 
-![License](https://img.shields.io/badge/license-MIT-green)
-![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-blue)
-![Status](https://img.shields.io/badge/status-Development-orange)
-![PCB](https://img.shields.io/badge/PCB-KiCad-success)
+*Universal Isolated USB-to-UART / ESP32 Programmer / RS485 / RS232 Converter*
 
 ---
 
-# ✨ Features
+## 📖 Overview
 
-✅ USB to UART (TTL)  
-✅ USB to RS485  
-✅ USB to RS232  
-✅ CH340K USB-UART Bridge  
-✅ MAX485 Half-Duplex RS485 Transceiver  
-✅ MAX232 RS232 Level Converter  
-✅ TX/RX Status LEDs  
-✅ Compact PCB Design  
-✅ ESD & Protection Circuitry  
-✅ Selectable Communication Modes  
-✅ 3.3V / 5V Compatible Logic Support  
-✅ Screw Terminal Connectivity for RS485  
-✅ Plug & Play USB Driver Support
+**SerialFusion** is a professional-grade isolated USB communication and programming tool designed for embedded engineers, makers, students, and industrial automation developers.
 
----
+The board combines multiple serial communication interfaces into a single compact device:
 
-# 📷 Project Preview
+* USB ↔ UART (TTL/CMOS)
+* ESP32 Auto Programmer
+* USB ↔ RS485 Converter
+* USB ↔ RS232 Converter
 
-## 3D PCB Render
+At its core is the reliable **CH340K USB-UART bridge**, combined with digital isolation, isolated power, industrial-grade transceivers, and ESP32 auto-programming support.
 
-_Add PCB image here_
-
-```text
-/images/pcb_render.png
-```
-
-## Schematic Preview
-
-_Add schematic image here_
-
-```text
-/images/schematic.png
-```
+Unlike typical USB-TTL adapters, SerialFusion provides electrical isolation, industrial communication interfaces, visual status indicators, and user-friendly connectors suitable for both development and field deployment.
 
 ---
 
-# 🧠 Why This Project?
+## ✨ Features
 
-Most USB communication adapters support only one protocol.
+### USB-C Connectivity
 
-This project combines:
+* USB Type-C interface
+* ESD-protected USB data lines
+* Modern reversible connector
+* Bus-powered operation
 
-- TTL UART
-- RS485
-- RS232
+### Isolated UART Interface
 
-into a **single compact hardware tool** useful for:
+* CH340K USB-UART bridge
+* ISO7721 digital isolation
+* Complete galvanic isolation between PC and target hardware
+* Protection against ground loops and industrial noise
 
-- Embedded engineers
-- Industrial automation
-- PLC communication
-- Arduino/STM32 debugging
-- Modbus testing
-- Firmware flashing
-- Serial monitoring
+### Isolated Power Supply
 
----
+* MEJ1S0505SC isolated DC-DC converter
+* Independent isolated target-side supply
+* Low-noise 3.3V regulation using MIC5219
 
-# 🛠️ Hardware Used
+### ESP32 Programming Support
 
-| Component | Description |
-|----------|-------------|
-| CH340K | USB to UART IC |
-| MAX485 | RS485 Transceiver |
-| MAX232 | RS232 Level Shifter |
-| AMS1117 | Voltage Regulator |
-| USB Type-C / Micro USB | USB Interface |
-| LEDs | TX/RX/Power Indicators |
-| TVS Diodes | ESD Protection |
-| Terminal Blocks | RS485 Connectivity |
+* Automatic bootloader entry
+* RTS → EN control
+* DTR → IO0 control
+* Compatible with ESP-IDF
+* Compatible with Arduino IDE
+* Manual BOOT and RESET pushbuttons
 
----
+### RS485 Interface
 
-# ⚙️ Communication Modes
+* ISL3172E industrial RS485 transceiver
+* Half-duplex communication
+* Selectable onboard 120Ω termination resistor
+* Suitable for:
 
-| Mode | Interface | Usage |
-|------|-----------|-------|
-| TTL UART | TX/RX/GND | MCU Debugging |
-| RS485 | A/B/GND | Industrial Communication |
-| RS232 | TX/RX/GND | Legacy Serial Devices |
+  * Modbus RTU
+  * EST-RBUS16
+  * Custom industrial protocols
+  * Multi-drop networks
 
----
+### RS232 Interface
 
-# 🔄 Block Diagram
+* MAX3232 RS232 transceiver
+* Standard DB9 connector
+* Full voltage-level conversion
+* Legacy equipment compatibility
 
-```text
-                 +----------------+
-USB ---> CH340K--| UART Interface |
-                 +--------+-------+
-                          |
-        +-----------------+------------------+
-        |                                    |
-   +----+----+                         +-----+-----+
-   | MAX485  |                         |  MAX232   |
-   | RS485   |                         |  RS232    |
-   +----+----+                         +-----+-----+
-        |                                    |
-      A / B                              TX / RX
-```
+### Debugging Features
 
----
+* Dedicated UART debug header
+* TX activity LED
+* RX activity LED
+* Power indicator LED
+* Clearly labeled pinout
 
-# 🔌 Pinout
+### User-Friendly Design
 
-## TTL Header
-
-| Pin | Description |
-|-----|-------------|
-| TXD | UART TX |
-| RXD | UART RX |
-| GND | Ground |
-| VCC | 5V/3.3V |
+* Color-coded silkscreen labels
+* Compact PCB layout
+* Ground-pour optimized routing
+* Easy access connectors
+* Professional assembly-friendly footprint selection
 
 ---
 
-## RS485 Terminal
+## 🔌 Interfaces
 
-| Pin | Description |
-|-----|-------------|
-| A | RS485 A |
-| B | RS485 B |
-| GND | Ground |
+### ESP32 Programming Header
 
----
+| Pin | Function     |
+| --- | ------------ |
+| TX  | UART TX      |
+| RX  | UART RX      |
+| EN  | ESP32 Reset  |
+| IO0 | ESP32 Boot   |
+| 3V3 | Target Power |
+| GND | Ground       |
 
-## RS232 DB9
-
-| Pin | Description |
-|-----|-------------|
-| TX | Transmit |
-| RX | Receive |
-| GND | Ground |
+Supports automatic firmware upload without manual button presses.
 
 ---
 
-# 📁 Project Structure
+### UART Debug Header
 
-```text
-USB-MultiProtocol-Converter/
-│
-├── Hardware/
-│   ├── Schematic/
-│   ├── PCB/
-│   ├── Gerber/
-│   └── BOM/
-│
-├── Firmware/
-│
-├── Images/
-│
-├── Docs/
-│
-└── README.md
-```
+| Pin | Function |
+| --- | -------- |
+| TX  | UART TX  |
+| RX  | UART RX  |
+| 3V3 | Supply   |
+| GND | Ground   |
+
+Ideal for debugging microcontrollers and embedded systems.
 
 ---
 
-# 🚀 Getting Started
+### RS485 Connector
 
-## 1️⃣ Clone Repository
+| Pin | Function |
+| --- | -------- |
+| A   | RS485 A  |
+| B   | RS485 B  |
 
-```bash
-git clone https://github.com/yourusername/USB-MultiProtocol-Converter.git
-```
-
----
-
-## 2️⃣ Open PCB Files
-
-Recommended Software:
-
-- KiCad
-- EasyEDA
-- Altium Designer
+Features selectable onboard termination resistor.
 
 ---
 
-## 3️⃣ Assemble PCB
+### RS232 Connector
 
-Solder all components carefully according to schematic.
-
----
-
-## 4️⃣ Install USB Driver
-
-### Windows
-
-Install CH340 Driver.
-
-### Linux
-
-Drivers are usually pre-installed.
-
-### macOS
-
-Install compatible CH340 USB drivers.
+Standard DB9 serial interface for legacy equipment and industrial devices.
 
 ---
 
-# 🧪 Testing
+## 🏗 Architecture
 
-## TTL Test
+PC USB
 
-- Connect TX ↔ RX
-- Open serial monitor
-- Enable loopback test
+↓
 
----
+USB-C
 
-## RS485 Test
+↓
 
-- Connect two adapters
-- Use Modbus/Serial software
-- Verify communication
+CH340K USB-UART
 
----
+↓
 
-## RS232 Test
+ISO7721 Isolation
 
-- Connect DB9 device
-- Open terminal software
-- Verify TX/RX communication
+↓
 
----
+┌─────────────┬─────────────┬─────────────┐
 
-# 📊 Future Improvements
+│ UART Debug │ ESP32 Prog │ Industrial │
 
-- [ ] Automatic Direction Control for RS485
-- [ ] Isolation Circuit
-- [ ] USB Type-C PD Support
-- [ ] Metal Enclosure
-- [ ] OLED Status Display
-- [ ] Baud Rate DIP Switch
-- [ ] STM32 Based Smart Version
+│ Interface │ Interface │ Interfaces │
+
+│ │ │ │
+
+│ │ │ ├── RS485
+
+│ │ │ └── RS232
+
+└─────────────┴─────────────┴─────────────┘
 
 ---
 
-# 🧰 Applications
+## ⚡ Power Architecture
 
-✔ PLC Communication  
-✔ Industrial Automation  
-✔ Embedded Debugging  
-✔ Serial Protocol Analysis  
-✔ Firmware Uploading  
-✔ Modbus Communication  
-✔ Robotics Projects  
-✔ IoT Development
+USB 5V
 
----
+↓
 
-# 📸 Screenshots
+MEJ1S0505SC
 
-| Description | Preview |
-|------------|---------|
-| PCB Front | Add Image |
-| PCB Back | Add Image |
-| Assembled Board | Add Image |
-| Serial Test | Add Image |
+(Isolated DC-DC)
 
----
+↓
 
-# 🤝 Contributing
+MIC5219-3.3
 
-Pull requests are welcome!
+↓
 
-If you'd like to improve this project:
+Isolated 3.3V Rail
 
-1. Fork repository
-2. Create feature branch
-3. Commit changes
-4. Submit PR
+This architecture provides protection against:
+
+* Ground loops
+* Industrial noise
+* USB port damage
+* Common-mode voltage issues
 
 ---
 
-# 📝 License
+## 🧪 Typical Applications
 
-This project is licensed under the MIT License.
+### Embedded Development
+
+* ESP32 programming
+* STM32 debugging
+* RP2040 development
+* AVR programming
+* UART monitoring
+
+### Industrial Automation
+
+* Modbus RTU testing
+* PLC communication
+* RS485 network diagnostics
+* Protocol development
+* Field commissioning
+
+### Education & Learning
+
+* Serial communication experiments
+* Embedded systems labs
+* Industrial communication training
 
 ---
 
-# ❤️ Author
+## 🔥 Project Status
 
-## EmbSysTech Innovations
+Current Stage:
 
-> Bytes of Innovations
+**Prototype Validation**
 
-Designed with passion for embedded systems & hardware engineering.
+Roadmap:
+
+* [x] Schematic Design
+* [x] PCB Layout
+* [ ] Prototype Assembly
+* [ ] Functional Testing
+* [ ] Firmware Validation
+* [ ] Production Release
 
 ---
 
-# ⭐ Support
+## ❤️ Author
+
+### EmbSysTech Innovations
+
+**Bytes of Innovations**
+
+Designed with passion for Embedded Systems, Industrial Electronics, and Open Hardware.
+
+---
+
+## ⭐ Support
 
 If you like this project:
 
-⭐ Star the repository  
-🍴 Fork the project  
-📢 Share with makers & developers
+⭐ Star the repository
 
----
+🍴 Fork the project
 
-# 📬 Contact
+📢 Share with makers, students, and engineers
 
-- YouTube: Add Channel Link
-- GitHub: Add GitHub Link
-- Website: Add Website
-
----
-
-# 🔥 Project Status
-
-🚧 Currently in Development Phase
-
-PCB Design → Prototype → Testing → Production
-
----
-
-# 📌 Notes
-
-⚠ RS232 uses voltage levels different from TTL UART.  
-⚠ Do not connect RS232 directly to MCU UART pins.  
-⚠ Verify power supply before connecting external devices.
-
----
-
-# 🎯 Goal
-
-Create a reliable, compact, affordable, and professional-grade USB communication tool for makers, students, and engineers.
+☕ Help spread the word about open hardware development
